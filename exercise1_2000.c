@@ -45,6 +45,6 @@ int main() {
   total_t = (double)(end_t - start_t) / CLOCKS_PER_SEC;
 
   //printing out the total runtimep of the 2D array initialization and summation
-  printf("Total time taken by CPU: %f\n", total_t  );
+  printf("Total time taken by CPU: %ld\n", total_t  );
 
 }
