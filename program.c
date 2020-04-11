@@ -15,7 +15,11 @@ int main(int argc, char* argv[]) {
 	moduloOffset = atoi(argv[2]);
 	
 	// Initialize the 2D array
-	int array[mSize][mSize];
+	int **array = (int **)malloc(mSize*sizeof(int*));
+	for(int i=0;i<mSize;i++)
+	{
+		array[i] = (int *)malloc(mSize*sizeof(int));
+	}
 	
 	// Initialize the summation variable
 	int x = 0;
