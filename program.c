@@ -2,17 +2,22 @@
 #include <stdlib.h>
 #include <time.h>
 
+#define ROW_MAJOR 0
+#define COLUMN_MAJOR 1
+
 int main(int argc, char* argv[]) {
 
-	if(argc != 3) {
-		printf("Usage: ./%s <matrix dimension> <access offset>\n", __FILE__);
+	if(argc != 4) {
+		printf("Usage: ./%s <matrix dimension> <access offset> <Row(0)/Column(1) Major>\n", __FILE__);
 	}
 	
 	int mSize = 1;
 	int moduloOffset = 1;
-	
+	int inMajor = 1;
+
 	mSize = atoi(argv[1]);
 	moduloOffset = atoi(argv[2]);
+	inMajor = atoi(argv[3]);
 	
 	// Initialize the 2D array
 	int **array = (int **)malloc(mSize*sizeof(int*));
@@ -53,12 +58,25 @@ int main(int argc, char* argv[]) {
 	start_t = clock();
 	
 	// Run a 2D array in row major order
-	for(int i = 0; i < moduloOffset; i++) {
-		for(int r = 0; r < mSize; r++) {
-			for(int c = i; c < mSize; c += moduloOffset) {
-				x += array[r][c];
+	if(inMajor == ROW_MAJOR){
+		for(int i = 0; i < moduloOffset; i++) {
+			for(int r = 0; r < mSize; r++) {
+				for(int c = i; c < mSize; c += moduloOffset) {
+					x += array[r][c];
+				}
 			}
 		}
+	}
+	else if(inMajor == COLUMN_MAJOR){
+		for(int i = 0; i< moduloOffset; i++){
+			for(int c = 0; c < mSize; c++){
+				for(int r = 0; r <mSize; r += moduloOffset){
+					x += array [r][c];
+				}
+			}
+		}
+	}
+	else{
 	}
 	
 	// Get the exit clock time
